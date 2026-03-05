@@ -1,19 +1,19 @@
-import { repository } from '../memory/repository.js';
 import { callLLM } from './llm.js';
 import { getSystemPrompt } from './prompt.js';
 import { getToolsDetails, executeTool } from '../tools/registry.js';
 import OpenAI from 'openai';
+import { repository } from '../memory/repository.js';
 
 const MAX_ITERATIONS = 5;
 
 export const processUserMessage = async (userId: number, text: string): Promise<string> => {
-  repository.saveMessage({
+  await repository.saveMessage({
     user_id: userId,
     role: 'user',
     content: text
   });
 
-  const history = repository.getMessages(userId);
+  const history = await repository.getMessages(userId);
   
   const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
     { role: 'system', content: getSystemPrompt() },
@@ -50,7 +50,7 @@ export const processUserMessage = async (userId: number, text: string): Promise<
     
     if (responseMessage.tool_calls && responseMessage.tool_calls.length > 0) {
       messages.push(responseMessage);
-      repository.saveMessage({
+      await repository.saveMessage({
         user_id: userId,
         role: 'assistant',
         content: responseMessage.content,
@@ -67,7 +67,7 @@ export const processUserMessage = async (userId: number, text: string): Promise<
         };
         messages.push(toolMsg);
         
-        repository.saveMessage({
+        await repository.saveMessage({
           user_id: userId,
           role: 'tool',
           content: result,
@@ -75,7 +75,7 @@ export const processUserMessage = async (userId: number, text: string): Promise<
         });
       }
     } else if (responseMessage.content) {
-      repository.saveMessage({
+      await repository.saveMessage({
         user_id: userId,
         role: 'assistant',
         content: responseMessage.content

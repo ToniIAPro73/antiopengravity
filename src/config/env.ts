@@ -16,7 +16,7 @@ const envSchema = z.object({
   GROQ_API_KEY: z.string().min(1, "Groq API key is required"),
   OPENROUTER_API_KEY: z.string().optional(),
   OPENROUTER_MODEL: z.string().default("openrouter/free"),
-  DB_PATH: z.string().default("./memory.db"),
+  GOOGLE_APPLICATION_CREDENTIALS: z.string().min(1, "Google Application Credentials path is required for Firebase"),
 });
 
 const parseEnv = () => {

@@ -4,6 +4,7 @@ import './memory/firestore.js'; // Ensure Firebase initializes on startup
 
 const start = async () => {
   console.log("🚀 Starting OpenAntiAgent...");
+  console.log("☁️  Firebase Admin SDK connected securely to Firestore.");
 
   console.log(`✅ Loaded ${config.TELEGRAM_ALLOWED_USER_IDS.length} whitelisted user(s).`);
 

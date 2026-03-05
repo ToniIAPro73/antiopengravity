@@ -6,6 +6,7 @@ dist/
 
 # Environment variables
 .env
+service-account.json
 
 # MacOS
 .DS_Store

@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+
+# Environment variables
+.env
+
+# MacOS
+.DS_Store
+
+# DB
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# IDEs
+.vscode/
+.idea/
